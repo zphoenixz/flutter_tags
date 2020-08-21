@@ -90,6 +90,7 @@ class _SuggestionsTextFieldState extends State<SuggestionsTextField> {
           decoration: _initialInputDecoration,
           onChanged: (str) => _checkOnChanged(str),
           onSubmitted: (str) => _onSubmitted(str),
+          textInputAction: TextInputAction.next,
         )
       ],
     );
@@ -134,17 +135,19 @@ class _SuggestionsTextFieldState extends State<SuggestionsTextField> {
 
     str = str.trim();
 
-    if (_suggestions != null) {
-      if (_matches.isNotEmpty || !_constraintSuggestion) {
+    if (str.isNotEmpty) {
+      if (_suggestions != null) {
+        if (_matches.isNotEmpty || !_constraintSuggestion) {
+          if (onSubmitted != null) onSubmitted(str);
+          setState(() {
+            _matches = [];
+          });
+          _controller.clear();
+        }
+      } else if (str.isNotEmpty) {
         if (onSubmitted != null) onSubmitted(str);
-        setState(() {
-          _matches = [];
-        });
         _controller.clear();
       }
-    } else if (str.isNotEmpty) {
-      if (onSubmitted != null) onSubmitted(str);
-      _controller.clear();
     }
   }
 
