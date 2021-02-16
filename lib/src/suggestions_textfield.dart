@@ -76,22 +76,23 @@ class _SuggestionsTextFieldState extends State<SuggestionsTextField> {
           ),
         ),
         TextField(
-          controller: _controller,
-          enabled: widget.tagsTextField.enabled,
-          autofocus: widget.tagsTextField.autofocus ?? true,
-          keyboardType: widget.tagsTextField.keyboardType ?? null,
-          textCapitalization: widget.tagsTextField.textCapitalization ??
-              TextCapitalization.none,
-          maxLength: widget.tagsTextField.maxLength ?? null,
-          maxLines: 1,
-          autocorrect: widget.tagsTextField.autocorrect ?? false,
-          style: widget.tagsTextField.textStyle.copyWith(
-              height: widget.tagsTextField.textStyle.height == null ? 1 : null),
-          decoration: _initialInputDecoration,
-          onChanged: (str) => _checkOnChanged(str),
-          onSubmitted: (str) => _onSubmitted(str),
-          textInputAction: TextInputAction.next,
-        )
+            controller: _controller,
+            enabled: widget.tagsTextField.enabled,
+            autofocus: widget.tagsTextField.autofocus ?? true,
+            keyboardType: widget.tagsTextField.keyboardType ?? null,
+            textCapitalization: widget.tagsTextField.textCapitalization ??
+                TextCapitalization.none,
+            maxLength: widget.tagsTextField.maxLength ?? null,
+            maxLines: 1,
+            autocorrect: widget.tagsTextField.autocorrect ?? false,
+            style: widget.tagsTextField.textStyle.copyWith(
+                height:
+                    widget.tagsTextField.textStyle.height == null ? 1 : null),
+            decoration: _initialInputDecoration,
+            onChanged: (str) => _checkOnChanged(str),
+            onSubmitted: (str) => _onSubmitted(str),
+            textInputAction: TextInputAction.next,
+            onEditingComplete: widget.tagsTextField.onEditingComplete)
       ],
     );
   }
@@ -197,7 +198,8 @@ class TagsTextField {
       this.maxLength,
       this.inputDecoration,
       this.onSubmitted,
-      this.onChanged});
+      this.onChanged,
+      this.onEditingComplete});
 
   final double width;
   final bool enabled;
@@ -221,4 +223,5 @@ class TagsTextField {
   final int maxLength;
   final OnSubmittedCallback onSubmitted;
   final OnChangedCallback onChanged;
+  final VoidCallback onEditingComplete;
 }
