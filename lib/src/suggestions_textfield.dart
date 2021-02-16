@@ -76,23 +76,26 @@ class _SuggestionsTextFieldState extends State<SuggestionsTextField> {
           ),
         ),
         TextField(
-            controller: _controller,
-            enabled: widget.tagsTextField.enabled,
-            autofocus: widget.tagsTextField.autofocus ?? true,
-            keyboardType: widget.tagsTextField.keyboardType ?? null,
-            textCapitalization: widget.tagsTextField.textCapitalization ??
-                TextCapitalization.none,
-            maxLength: widget.tagsTextField.maxLength ?? null,
-            maxLines: 1,
-            autocorrect: widget.tagsTextField.autocorrect ?? false,
-            style: widget.tagsTextField.textStyle.copyWith(
-                height:
-                    widget.tagsTextField.textStyle.height == null ? 1 : null),
-            decoration: _initialInputDecoration,
-            onChanged: (str) => _checkOnChanged(str),
-            onSubmitted: (str) => _onSubmitted(str),
-            textInputAction: TextInputAction.next,
-            onEditingComplete: widget.tagsTextField.onEditingComplete)
+          controller: _controller,
+          enabled: widget.tagsTextField.enabled,
+          autofocus: widget.tagsTextField.autofocus ?? true,
+          keyboardType: widget.tagsTextField.keyboardType ?? null,
+          textCapitalization: widget.tagsTextField.textCapitalization ??
+              TextCapitalization.none,
+          maxLength: widget.tagsTextField.maxLength ?? null,
+          maxLines: 1,
+          autocorrect: widget.tagsTextField.autocorrect ?? false,
+          style: widget.tagsTextField.textStyle.copyWith(
+              height: widget.tagsTextField.textStyle.height == null ? 1 : null),
+          decoration: _initialInputDecoration,
+          onChanged: (str) => _checkOnChanged(str),
+          onSubmitted: (str) => _onSubmitted(str),
+          textInputAction: widget.tagsTextField.currentTagsLength + 1 <
+                  widget.tagsTextField.maxTagsLength
+              ? TextInputAction.next
+              : TextInputAction.done,
+          onEditingComplete: widget.tagsTextField.onEditingComplete,
+        )
       ],
     );
   }
@@ -135,7 +138,6 @@ class _SuggestionsTextFieldState extends State<SuggestionsTextField> {
     if (widget.tagsTextField.lowerCase) str = str.toLowerCase();
 
     str = str.trim();
-
     if (str.isNotEmpty) {
       if (_suggestions != null) {
         if (_matches.isNotEmpty || !_constraintSuggestion) {
@@ -199,7 +201,9 @@ class TagsTextField {
       this.inputDecoration,
       this.onSubmitted,
       this.onChanged,
-      this.onEditingComplete});
+      this.onEditingComplete,
+      this.currentTagsLength,
+      this.maxTagsLength});
 
   final double width;
   final bool enabled;
@@ -224,4 +228,6 @@ class TagsTextField {
   final OnSubmittedCallback onSubmitted;
   final OnChangedCallback onChanged;
   final VoidCallback onEditingComplete;
+  final int currentTagsLength;
+  final int maxTagsLength;
 }
