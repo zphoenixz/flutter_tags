@@ -90,10 +90,7 @@ class _SuggestionsTextFieldState extends State<SuggestionsTextField> {
           decoration: _initialInputDecoration,
           onChanged: (str) => _checkOnChanged(str),
           onSubmitted: (str) => _onSubmitted(str),
-          textInputAction: widget.tagsTextField.currentTagsLength + 1 <
-                  widget.tagsTextField.maxTagsLength
-              ? TextInputAction.next
-              : TextInputAction.done,
+          textInputAction: widget.tagsTextField.textInputAction,
           onEditingComplete: widget.tagsTextField.onEditingComplete,
         )
       ],
@@ -202,8 +199,7 @@ class TagsTextField {
       this.onSubmitted,
       this.onChanged,
       this.onEditingComplete,
-      this.currentTagsLength,
-      this.maxTagsLength});
+      this.textInputAction});
 
   final double width;
   final bool enabled;
@@ -228,6 +224,5 @@ class TagsTextField {
   final OnSubmittedCallback onSubmitted;
   final OnChangedCallback onChanged;
   final VoidCallback onEditingComplete;
-  final int currentTagsLength;
-  final int maxTagsLength;
+  final TextInputAction textInputAction;
 }
